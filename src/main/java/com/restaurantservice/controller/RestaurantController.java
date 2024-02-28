@@ -6,7 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,6 @@ import com.restaurantservice.models.RestaurantEntity;
 import com.restaurantservice.service.facade.RestaurantService;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/restaurants")
@@ -52,18 +52,31 @@ public class RestaurantController {
 	private RestaurantService restaurantService;
 	
 	@PostMapping( value = "",consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
-	public ResponseEntity<RestaurantEntity> save( 
+	public ResponseEntity<?> save( 
 			@Valid @RequestParam("title")  String title,
 			@RequestParam("food_category")  String food_category,
 			@RequestParam("description")  String description,
-			@RequestParam ("openingDate")@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date openingDate,
-			@RequestParam("closingDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date closingDate,
+			@RequestParam ("openingDate") String openingDate,
+			@RequestParam("closingDate")  String closingDate,
 			@RequestParam("latitude")  String latitude,
 			@RequestParam("longitude")  String longitude,
 			@RequestParam("ville")  String ville,
 			@RequestPart("imageFiles") List<MultipartFile> imageFiles
 			)throws IOException{
-		RestaurantEntity placeDto = new RestaurantEntity(null, title, food_category, description, openingDate, closingDate, Float.parseFloat(latitude), Float.parseFloat(longitude), ville, null,null);
+		
+		Date openingDateConvert;
+	    Date closingDateConvert;
+	    
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    try {
+	    	openingDateConvert = dateFormat.parse(openingDate);
+	    	closingDateConvert = dateFormat.parse(closingDate);
+	    } catch (ParseException e) {
+	        // Gérer l'erreur de format de date invalide
+	        return ResponseEntity.badRequest().body("Format de date invalide");
+	    }
+		
+		RestaurantEntity placeDto = new RestaurantEntity(null, title, food_category, description, openingDateConvert, closingDateConvert, Float.parseFloat(latitude), Float.parseFloat(longitude), ville, null,null);
 		
 		if(imageFiles == null || imageFiles.isEmpty()) {
 			
