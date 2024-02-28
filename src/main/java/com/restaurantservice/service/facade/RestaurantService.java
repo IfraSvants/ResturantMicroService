@@ -10,7 +10,9 @@ public interface RestaurantService {
 	
 	List<RestaurantEntity> findAll();
 	List<RestaurantEntity> findByVille(String ville);
-//	List<RestaurantEntity> findByFood(String food);
+	List<RestaurantEntity> findByFood(String food);
+	List<RestaurantEntity> findByFoodAndVille(String food,String ville);
+	
 	
 	// Ajout
 	RestaurantEntity add(RestaurantEntity restaurant);

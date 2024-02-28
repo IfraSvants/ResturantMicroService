@@ -10,7 +10,9 @@ import java.util.List;
 @Repository
 public interface RestaurantDao extends JpaRepository<RestaurantEntity, Integer>{
 	List<RestaurantEntity> findByVille(String ville);
-//	List<RestaurantEntity> findByFood_category(String food_category);
+	List<RestaurantEntity> findByFood(String food);
+	List<RestaurantEntity> findByFoodAndVille(String food,String ville);
+
 	
 	
 }

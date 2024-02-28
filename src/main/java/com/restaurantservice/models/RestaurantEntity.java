@@ -43,7 +43,7 @@ public class RestaurantEntity implements Serializable {
 	String title;
 	
 	@Column( nullable = false )
-	String food_category;
+	String food;
 	
 	@Column( nullable = false )
 	String description;

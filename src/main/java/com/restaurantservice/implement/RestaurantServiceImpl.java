@@ -37,26 +37,31 @@ public class RestaurantServiceImpl implements RestaurantService{
 	}
 
 	@Override
-	public RestaurantEntity update(int id, RestaurantEntity restaurant) {
+	public List<RestaurantEntity> findByFood(String food) {
 		// TODO Auto-generated method stub
+		return restaurantDao.findByFood(food);
+	}
+
+	@Override
+	public RestaurantEntity update(int id, RestaurantEntity restaurant) {
 		RestaurantEntity r=restaurantDao.getById(id);
 		r.setTitle(restaurant.getTitle());
 		r.setDescription(restaurant.getDescription());
-		r.setFood_category(restaurant.getFood_category());
-		r.setLatitude(restaurant.getLatitude());
-		r.setLongitude(restaurant.getLongitude());
 		r.setOpeningDate(restaurant.getOpeningDate());
 		r.setClosingDate(restaurant.getClosingDate());
+		r.setVille(restaurant.getVille());
+		r.setLatitude(restaurant.getLatitude());
+		r.setLongitude(restaurant.getLongitude());
 		return restaurantDao.save(r);
+		return null;
+	}
+
+	@Override
+	public List<RestaurantEntity> findByFoodAndVille(String food, String ville) {
+		return restaurantDao.findByFoodAndVille(food, ville);
 	}
 
 
-
-//	@Override
-//	public List<RestaurantEntity> findByFood(String food) {
-//		// TODO Auto-generated method stub
-//		return restaurantDao.findByFood_category(food);
-//	}
 
 	
 

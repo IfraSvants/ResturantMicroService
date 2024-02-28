@@ -146,14 +146,6 @@ public class RestaurantController {
 		return ResponseEntity.accepted().body(saved);
 	}
 	
-	
-	
-	
-	
-	@PostMapping("/add")
-	public RestaurantEntity add(@RequestBody RestaurantEntity restaurant) {
-		return restaurantService.add(restaurant);
-	}
 	//-----------
 	@GetMapping("/getAll")
 	public List<RestaurantEntity> getAll(){
@@ -162,6 +154,14 @@ public class RestaurantController {
 	@GetMapping("/getByVille/{ville}")
 	public List<RestaurantEntity> getByVille(@PathVariable String ville){
 		return restaurantService.findByVille(ville);
+	}
+	@GetMapping("/getByfood/{food}")
+	public List<RestaurantEntity> getByFood(@PathVariable String food){
+		return restaurantService.findByFood(food);
+	}
+	@GetMapping("/getByfoodVille/{food}/{ville}")
+	public List<RestaurantEntity> getByFood(@PathVariable String food,@PathVariable String ville){
+		return restaurantService.findByFoodAndVille(food,ville);
 	}
 	//---------
 	@PutMapping("/update/{id}")
@@ -173,9 +173,6 @@ public class RestaurantController {
 	public void deleteById(@PathVariable int id){
 		 restaurantService.delete(id);
 	}
-//	@GetMapping("/getByfood/{food}")
-//	public List<RestaurantEntity> getByFood(@PathVariable String food){
-//		return restaurantService.findByFood(food);
-//	}
+
 	
 }
